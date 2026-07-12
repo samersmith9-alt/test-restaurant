@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  nameAr    String
+  slug      String    @unique
+  image     String?
+  order     Int       @default(0)
+  menuItems MenuItem[]
+  createdAt DateTime  @default(now())
+}
+
+model MenuItem {
+  id          Int       @id @default(autoincrement())
+  name        String
+  nameAr      String
+  description String?
+  descriptionAr String?
+  price       Float
+  priceSyp    Float   @default(0)
+  image       String?
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  available   Boolean   @default(true)
+  featured    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  customerName  String
+  customerPhone String
+  address       String
+  notes         String?
+  items         OrderItem[]
+  total         Float
+  status        String      @default("pending")
+  createdAt     DateTime    @default(now())
+}
+
+model OrderItem {
+  id         Int      @id @default(autoincrement())
+  orderId    Int
+  order      Order    @relation(fields: [orderId], references: [id])
+  menuItemId Int
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+  price      Float
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+}
