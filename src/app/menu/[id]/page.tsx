@@ -3,6 +3,11 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import ItemDetailClient from "@/components/ItemDetailClient";
 
+export async function generateStaticParams() {
+  const items = await prisma.menuItem.findMany({ select: { id: true } });
+  return items.map((item) => ({ id: item.id.toString() }));
+}
+
 export default async function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const item = await prisma.menuItem.findUnique({
