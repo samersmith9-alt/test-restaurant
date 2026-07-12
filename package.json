@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "mv src/app/api src/app/api.bak && next build && mv src/app/api.bak src/app/api",
+    "build:api": "next build",
     "start": "next start",
     "lint": "eslint"
   },
