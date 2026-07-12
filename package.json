@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "mv src/app/api src/api.routes && next build && mv src/api.routes src/app/api",
     "start": "next start",
     "lint": "eslint"
   },

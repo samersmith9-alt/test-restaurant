@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
   images: {
     remotePatterns: [new URL("https://**.example.com/**")],
     qualities: [25, 50, 75, 100],
